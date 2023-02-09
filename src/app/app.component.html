@@ -1,28 +1,31 @@
-<div id="main-div" style="text-align:center;">
-  <img src="../assets/pngwing.com (1).png" alt="logo" height="70px" width="85px" class="logo"
-  >
-
-  <h1 id="app-title">TODO LIST</h1>
-</div>
-
-<div id="container">
-  <p style="color: #c1c1c1; font-size: 14px; margin-bottom: 4px;">Add a TODO...</p>
-  <input type="text" placeholder="What to do ?" class="input-text"
-  [(ngModel)]="todoValue"
-  (keyup.enter)="addItem()"
-  >
-  <button type="button" class="btn btn-primary add-btn" id="add-btn" (click)="addItem()">ADD TODO</button>
-  <button type="button" class="btn btn-danger add-btn  dis" id="delete-all-btn" (click)="deleteAllItem()" *ngIf="list.length>0">Delete All</button>
-
-  <div class="list" style="margin: 40px 0;">
-    <ul type="none">
-      <li *ngFor="let item of list">
-        <input type="checkbox" name="isDone" class="check"
-        [(ngModel)]="item.isDone"
-        >
-        {{item.value}}
-        <button type="button" class="btn btn-warning delete-btn" (click)="deleteItem(item.id)">Delete</button>
-      </li>
-    </ul>
+<div>
+  <div id="main-div" style="text-align:center;" >
+    <img src="../assets/pngwing.com (2).png" alt="logo" height="70px" width="85px" class="logo"
+    >
+  
+    <h1 id="app-title">TODO LIST</h1>
+  </div>
+  
+  <div id="container">
+    <p style="color: #c1c1c1; font-size: 14px; margin-bottom: 4px;">Add a TODO...</p>
+    <input type="text" placeholder="What to do ?" class="input-text"
+    [(ngModel)]="todoValue"
+    (keyup.enter)="addItem()"
+    >
+    <button type="button" class="btn btn-primary add-btn" id="add-btn" (click)="addItem()">ADD TODO</button>
+    <button type="button" class="btn btn-danger add-btn  dis" id="delete-all-btn" (click)="deleteAllItem()" *ngIf="list.length>0">Delete All</button>
+  
+    <div class="list" style="margin: 40px 0;">
+      <ul type="circle" id="bounding-box" cdkDropList (cdkDropListDropped)="drop($event)">
+        <li *ngFor="let item of list" cdkDrag cdkDragBoundary="#bounding-box">
+          <input type="checkbox" name="isDone" class="check" id="checkbox"
+          [(ngModel)]="item.isDone"
+          (change)="onChange($event, item.id)"
+          >
+          {{item.value}}
+          <button type="button" class="btn btn-warning delete-btn" (click)="deleteItem(item.id)">Delete</button>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
